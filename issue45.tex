@@ -1,0 +1,13 @@
+\documentclass{article}
+\usepackage{eledmac}
+\begin{document}
+\beginnumbering
+\pstart
+\edtext{main\ledsidenote{this works} text}{%
+    \lemma{main\ledsidenote{this doesn't} text}%
+    \Afootnote{variant\ledsidenote{this doesn't either} text}}
+\pend
+\endnumbering
+\end{document}
+
+
