@@ -10716,6 +10716,151 @@
 % \end{macro}
 %
 %
+%%% TODO TN
+% \paragraph{Two columns in paragraph mode}
+%
+% \begin{macro}{\Xarrangement@twocolpara}
+%    \begin{macrocode}
+\newcommand*{\Xarrangement@twocolpara}[1]{%
+  \csgdef{series@display#1}{twocolpara}
+  \expandafter\let\csname v#1footnote\endcsname=\twocolparavfootnote
+  \expandafter\let\csname #1footfmt\endcsname=\twocolparafootfmt
+  \expandafter\let\csname #1footgroup\endcsname=\twocolparafootgroup
+  \dimen\csname #1footins\endcsname=\csuse{Xmaxhnotes@#1}%
+  \skip\csname #1footins\endcsname=\csuse{Xbeforenotes@#1}%
+  \advance\skip\csname #1footins\endcsname by\csuse{Xafterrule@#1}%
+  \twocolparafootsetup{#1}
+%    \end{macrocode}
+% The additional setup for minipages.
+%    \begin{macrocode}
+  \ifnoledgroup@\else
+    \expandafter\let\csname mpv#1footnote\endcsname=\mpnormalvfootnote
+    \expandafter\let\csname mp#1footgroup\endcsname=\mptwocolparafootgroup
+    \skip\csname mp#1footins\endcsname=\csuse{Xbeforenotes@#1}%
+    \advance\skip\csname mp#1footins\endcsname by\csuse{Xafterrule@#1}%
+    \mptwocolfootparasetup{#1}
+  \fi
+}
+
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\twocolparafootsetup}
+% \begin{macro}{\twocolparavfootnote}
+% \begin{macro}{\twocolparavfootnote@inserted}
+% \begin{macro}{\twocolparafootfmt}
+% \begin{macro}{\twocolparafootgroup}
+% Here is a series of macros which are very similar to their
+% three-column counterparts. In this case,
+% each note is assumed to contribute only a half a line of text.
+% And the notes are set in columns
+% giving a gap between them of one tenth
+% of the \protect\cs{hsize}.
+%    \begin{macrocode}
+\newcommand*{\twocolparafootsetup}[1]{%
+  \count\csname #1footins\endcsname 500
+  \csxdef{default@#1footins}{500}%
+  \multiply\dimen\csname #1footins\endcsname \tw@}
+%    \end{macrocode}
+%    \begin{macrocode}
+\notbool{parapparatus@}{\newcommand*}{\newcommand}{\twocolparavfootnote}[2]{%
+  \iftoggle{Xgroupbyline@#1}{%
+    \prepare@Xgroupbyline{#1}{#2}{\twocolparavfootnote@inserted}%
+  }{%
+    \X@beforeinsertion{#1}%
+    \insert\csname #1footins\endcsname{%
+      \twocolparavfootnote@inserted{#1}{#2}%
+    }%
+  }%
+}%
+\notbool{parapparatus@}{\newcommand*}{\newcommand}{\twocolparavfootnote@inserted}[2]{%
+  \hsize=\expandafter\dimexpr\csuse{Xwidth@#1}\relax%
+  \noindent\csuse{Xbhooknote@#1}%
+  \csuse{Xnotefontsize@#1}%
+  \footsplitskips%
+  \csname #1footfmt\endcsname #2{#1}%
+}%
+%    \end{macrocode}
+%    \begin{macrocode}
+\notbool{parapparatus@}{\newcommand*}{\newcommand}{\twocolparafootfmt}[4]{% 4th arg is optional, for backward compatibility
+  \Xstorelineinfo{#1}{#4}%
+  \twocolpara@begin@insert{#4}%
+  \hspace{\parindent}%
+  \printlinefootnote{#1}{#4}%
+  \print@lemma{#1}{#2}{#4}%
+  \csuse{Xwrapcontent@#4}{#3}%
+  \nottoggle{Xgroupbyline@#4}%
+    {\strut\par\allowbreak}%
+    {}%
+}%
+%    \end{macrocode}
+%    \begin{macrocode}
+
+\newcommand{\twocolpara@begin@insert}[1]{%
+  \normal@pars%
+  \hsize \csuse{Xhsizetwocol@#1}%
+  \nottoggle{Xparindent@#1}{\parindent=\z@}{}%
+  \tolerance=5000%
+  \hangindent=\csuse{Xhangindent@#1}%
+  \everypar{\hangindent=\csuse{Xhangindent@#1}}%
+  \@tempdima=\parindent%
+  \csuse{Xcolalign@#1}%
+  \parindent=\@tempdima%
+  \strut%
+}%
+
+\newcommand*{\twocolparafootgroup}[1]{%
+  \csuse{Xbhookgroup@#1}\par%
+  \splittopskip=\ht\strutbox
+  \expandafter
+  \Xrigidbalance\csname #1footins\endcsname \tw@ \splittopskip}
+
+%    \end{macrocode}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+%
+% \begin{macro}{\mptwocolparafootsetup}
+% \begin{macro}{\mptwocolparafootgroup}
+% The versions for minipages.
+%    \begin{macrocode}
+\newcommand*{\mptwocolparafootsetup}[1]{%
+  \count\csname mp#1footins\endcsname 500
+  \multiply\dimen\csname mp#1footins\endcsname \tw@}
+%    \end{macrocode}
+%    \begin{macrocode}
+\newcommand*{\mptwocolparafootgroup}[1]{{%
+  \vskip\skip\@nameuse{mp#1footins}
+  \ifl@dpairing\ifparledgroup%
+    \leavevmode\marks\parledgroup@{begin}%
+    \marks\parledgroup@series{#1}%
+    \marks\parledgroup@type{Xfootnote}%
+  \fi\fi\normalcolor
+  \ifparledgroup%
+    \ifl@dpairing%
+    \else%
+      \setXnoteswidthliketwocolumns@{#1}%
+      \setXnotespositionliketwocolumns@{#1}%
+      \print@Xfootnoterule{#1}%
+    \fi%
+  \else%
+    \setXnoteswidthliketwocolumns@{#1}%
+    \setXnotespositionliketwocolumns@{#1}%
+    \print@Xfootnoterule{#1}%
+  \fi%
+   \csuse{Xbhookgroup@#1}\par%
+  \splittopskip=\ht\strutbox
+  \expandafter
+  \Xrigidbalance\csname mp#1footins\endcsname \tw@ \splittopskip}}
+
+%    \end{macrocode}
+% \end{macro}
+% \end{macro}
+%
+%%% TODO TN
+% 
 % \subsection{Critical notes presentation}
 % Here, we define some commons macro which are used in order to print a critical notes, that is a note with 1) line number 2) lemma 3) lemma separator 4) text associated to the lemma.
 
