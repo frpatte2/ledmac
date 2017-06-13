@@ -4,10 +4,11 @@
 \setmainlanguage{latin}
 \setotherlanguage{english}
 
-\usepackage[series={A,B,C,D},noend,noeledsec,nofamiliar,noledgroup]{reledmac}
+\usepackage[series={A,B,C,D,E},noend,noeledsec,nofamiliar,noledgroup]{reledmac}
 \Xarrangement[B]{twocol}
 \Xarrangement[C]{threecol}
 \Xarrangement[D]{paragraph}
+\Xarrangement[E]{twocolpara}
 \begin{document}
 
 \begin{english}
@@ -25,6 +26,7 @@ Here we use four series of critical notes.
 \item Each note of series B has its own paragraph, but there are arranged in two columns.  
 \item Each note of series C has its own paragraph, but there are arranged in three columns. 
 \item The notes of series D are arranged in the same paragraph.
+\item The notes of series E are arranged in the same paragraph but typeset in two columns.
 \end{itemize}
 \end{abstract}
 \end{english}
@@ -35,19 +37,22 @@ Here we use four series of critical notes.
   \Afootnote{A critical note}
   \Bfootnote{Critical note in series B}
   \Cfootnote{Critical note in series C}
-  \Dfootnote{loram}}
+  \Dfootnote{loram}
+  \Efootnote{Critical note in series E}}
 \edtext{ipsum}{
   \Afootnote{An other critical note}
   \Bfootnote{Other critical note in series B}
   \Cfootnote{Other critical note in series C}
-  \Dfootnote{ipsam}}
+  \Dfootnote{ipsam}
+  \Efootnote{Other critical note in series E}}
  dolor sit amet, consectetur adipiscing elit. 
  \edtext{Fusce sed dolor libero. Aenean rutrum vestibulum lacus ut pretium. Fusce et auctor lectus. Ut et commodo quam, quis gravida orci. Nullam at risus elementum, suscipit enim a, pellentesque mi}
  {\lemma{Fusce\ldots mi}
  \Afootnote{A long critical note}
  \Bfootnote{Again B}
  \Cfootnote{Again C}
- \Dfootnote{omit}}. 
+ \Dfootnote{omit}. 
+ \Efootnote{Again E}}.
 Morbi commodo, ligula vel consectetur accumsan, massa metus egestas velit, eu fringilla leo ante in turpis. Vivamus ut tellus sollicitudin, facilisis ipsum sit amet, tincidunt odio. Maecenas tincidunt dolor sed ante blandit tincidunt. Etiam vulputate ultricies facilisis.
 \pend
 \endnumbering
