@@ -10774,6 +10774,7 @@
   }%
 }%
 \notbool{parapparatus@}{\newcommand*}{\newcommand}{\twocolparavfootnote@inserted}[2]{%
+%  \hsize=\expandafter\dimexpr\csuse{Xhsizetwocol@#1}\relax%
   \hsize=\expandafter\dimexpr\csuse{Xwidth@#1}\relax%
   \noindent\csuse{Xbhooknote@#1}%
   \csuse{Xnotefontsize@#1}%
@@ -10810,7 +10811,9 @@
 }%
 
 \newcommand*{\twocolparafootgroup}[1]{%
-  \hsize=\expandafter\dimexpr\csuse{Xwidth@#1}\relax%
+%%% TODO clean one of the lines
+  \hsize=\expandafter\dimexpr\csuse{Xhsizetwocol@#1}\relax% Change Xwidth@#1 to the width of 2 columns. 
+%  \hsize=\expandafter\dimexpr\csuse{Xwidth@#1}\relax
   \unvbox\csname #1footins\endcsname 
   \ifcsstring{Xragged@#1}{L}{\RaggedLeft}{}%
   \ifcsstring{Xragged@#1}{R}{\RaggedRight}{}%
