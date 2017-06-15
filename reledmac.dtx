@@ -10723,6 +10723,7 @@
 %    \begin{macrocode}
 \newcommand*{\Xarrangement@twocolpara}[1]{%
   \csgdef{series@display#1}{twocolpara}
+  \expandafter\let\csname #1footstart\endcsname=\parafootstart
   \expandafter\let\csname v#1footnote\endcsname=\twocolparavfootnote
   \expandafter\let\csname #1footfmt\endcsname=\twocolparafootfmt
   \expandafter\let\csname #1footgroup\endcsname=\twocolparafootgroup
