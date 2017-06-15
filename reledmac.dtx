@@ -10628,7 +10628,8 @@
     \insert\csname #1footins\endcsname{%
       \twocolvfootnote@inserted{#1}{#2}%
     }%
-  }%}}%
+  }%
+}%
 \notbool{parapparatus@}{\newcommand*}{\newcommand}{\twocolvfootnote@inserted}[2]{%
   \hsize=\expandafter\dimexpr\csuse{Xwidth@#1}\relax%
   \noindent\csuse{Xbhooknote@#1}%
@@ -10722,14 +10723,12 @@
 %    \begin{macrocode}
 \newcommand*{\Xarrangement@twocolpara}[1]{%
   \csgdef{series@display#1}{twocolpara}
-  \expandafter\let\csname #1footstart\endcsname=\parafootstart
-  \expandafter\let\csname v#1footnote\endcsname=\paravfootnote
-  \expandafter\let\csname #1footfmt\endcsname=\parafootfmt
+  \expandafter\let\csname v#1footnote\endcsname=\twocolparavfootnote
+  \expandafter\let\csname #1footfmt\endcsname=\twocolparafootfmt
   \expandafter\let\csname #1footgroup\endcsname=\twocolparafootgroup
   \dimen\csname #1footins\endcsname=\csuse{Xmaxhnotes@#1}%
   \skip\csname #1footins\endcsname=\csuse{Xbeforenotes@#1}%
   \advance\skip\csname #1footins\endcsname by\csuse{Xafterrule@#1}%
-  \para@footsetup{#1}
   \twocolparafootsetup{#1}
 %    \end{macrocode}
 % The additional setup for minipages.
@@ -10811,18 +10810,16 @@
 }%
 
 \newcommand*{\twocolparafootgroup}[1]{%
-  \csuse{Xbhookgroup@#1}\par%
-  % \hsize=\expandafter\dimexpr\csuse{Xhsizetwocol@#1}\relax% Change width from Xwidth@#1 to Xhsizetwocol@#1
-  % \unvbox\csname #1footins\endcsname 
-  % \ifcsstring{Xragged@#1}{L}{\RaggedLeft}{}%
-  % \ifcsstring{Xragged@#1}{R}{\RaggedRight}{}%
-  % \makehboxofhboxes
-  % \setbox0=\hbox{\unhbox0 \removehboxes}%
-  % \csuse{Xbhookgroup@#1}%
-  % \csuse{Xnotefontsize@#1}%
-  % \unhbox0\par%
-  % \global\hsize=\old@hsize%
-  \splittopskip=\ht\strutbox
+  \hsize=\expandafter\dimexpr\csuse{Xwidth@#1}\relax%
+  \unvbox\csname #1footins\endcsname 
+  \ifcsstring{Xragged@#1}{L}{\RaggedLeft}{}%
+  \ifcsstring{Xragged@#1}{R}{\RaggedRight}{}%
+  \makehboxofhboxes
+  \setbox0=\hbox{\unhbox0 \removehboxes}%
+  \csuse{Xbhookgroup@#1}%
+  \csuse{Xnotefontsize@#1}%
+  \unhbox0\par%
+  \global\hsize=\old@hsize%
   \expandafter
   \Xrigidbalance\csname #1footins\endcsname \tw@ \splittopskip}
 
