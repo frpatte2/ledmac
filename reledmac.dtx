@@ -9953,7 +9953,8 @@
 % Peter Wilson have also included \protect\cs{footfudgefiddle}.
 % \changes{v0.2.2}{2003/11/04}{Added \protect\cs{footfudgefiddle} to \protect\cs{para@footsetup}}
 %    \begin{macrocode}
-\newcommand*{\para@footsetup}[1]{{\csuse{Xbhookgroup@#1}\csuse{Xnotefontsize@#1}
+\newcommand*{\para@footsetup}[1]{
+  {\csuse{Xbhookgroup@#1}\csuse{Xnotefontsize@#1}
   \setXnoteswidthliketwocolumns@{#1}%
   \ifcsempty{Xwidth@#1}%
     {}%
@@ -9962,7 +9963,8 @@
   \multiply\dimen0 by 1024
   \divide \dimen0 by \columnwidth \multiply\dimen0 by \footfudgefiddle\relax
   \csxdef{#1footfudgefactor}{%
-    \expandafter\strip@pt\dimen0 }}}
+    \expandafter\strip@pt\dimen0 }}
+}
 
 %    \end{macrocode}
 % \end{macro}
@@ -10761,7 +10763,18 @@
 \newcommand*{\twocolparafootsetup}[1]{%
   \count\csname #1footins\endcsname 500
   \csxdef{default@#1footins}{500}%
-  \multiply\dimen\csname #1footins\endcsname \tw@}
+  \multiply\dimen\csname #1footins\endcsname \tw@
+  {\csuse{Xbhookgroup@#1}\csuse{Xnotefontsize@#1}
+  \setXnoteswidthliketwocolumns@{#1}%
+  \ifcsempty{Xwidth@#1}%
+    {}%
+    {\columnwidth=\expandafter\dimexpr\csuse{Xwidth@#1}\relax}%
+  \dimen0=\baselineskip
+  \multiply\dimen0 by 1024
+  \divide \dimen0 by \columnwidth \multiply\dimen0 by \footfudgefiddle\relax
+  \csxdef{#1footfudgefactor}{%
+    \expandafter\strip@pt\dimen0 }}
+}
 %    \end{macrocode}
 %    \begin{macrocode}
 \notbool{parapparatus@}{\newcommand*}{\newcommand}{\twocolparavfootnote}[2]{%
