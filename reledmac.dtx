@@ -10835,10 +10835,11 @@
   \setbox0=\hbox{\unhbox0 \removehboxes}%
   \csuse{Xbhookgroup@#1}%
   \csuse{Xnotefontsize@#1}%
-  \unhbox0\par%
+  \setbox0=\vbbox{\unhbox0\par}%Store the notes in a vertical box
   \global\hsize=\old@hsize%
   \expandafter
-  \Xrigidbalance\csname #1footins\endcsname \tw@ \splittopskip}
+  \Xrigidbalance0 \tw@ \splittopskip%And split the vertical box containing footnote in two columns
+}%
 
 %    \end{macrocode}
 % \end{macro}
